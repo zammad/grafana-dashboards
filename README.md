@@ -12,9 +12,9 @@ Please consult our documentation for more input *(soon™)*.
 
 ## Dashbaords
 
-For better overview we've decided to divide Dashboards in categories. 
-For example this means you'll find Ticket specific things in Tickets and 
-detailed statistics about your CTI calls on another dashboard.
+For better overview we've decided to put each dashboard into its own folder. 
+Every folder contains the ``.json`` file needed for importing and a screen shot 
+for a better idea what the dashboard is about.
 
 ## Extending / Building your own panel
 
