@@ -8,13 +8,24 @@ They may not cover all or explicit use cases and may be extended in the future.
 ## Data Sources
 
 Please note that these Dashboards require a specific Data Source configuration. 
-Please consult our documentation for more input *(soon™)*.
+For more input, please consult our 
+[documentation](https://docs.zammad.com/en/latest/appendix/reporting-tools-thirdparty/grafana).
 
-## Dashbaords
+## Dashboards
 
 For better overview we've decided to put each dashboard into its own folder. 
 Every folder contains the ``.json`` file needed for importing and a screen shot 
 for a better idea what the dashboard is about.
+
+## Compatibility note
+
+Please note that these dashboards work natively with Grafana 7.5. 
+Older versions may not support them or need manual adjustments.
+
+The chat session dashboard requires the 
+[worldmap plugin](https://grafana.com/grafana/plugins/grafana-worldmap-panel/). 
+Install it by using ``grafana-cli plugins install grafana-worldmap-panel`` 
+followed by a Grafana restart.
 
 ## Extending / Building your own panel
 
