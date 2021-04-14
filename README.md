@@ -9,7 +9,7 @@ They may not cover all or explicit use cases and may be extended in the future.
 
 Please note that these Dashboards require a specific Data Source configuration. 
 For more input, please consult our 
-[documentation](https://docs.zammad.com/en/latest/appendix/reporting-tools-thirdparty/grafana).
+[documentation](https://docs.zammad.org/en/latest/appendix/reporting-tools-thirdparty/grafana.html).
 
 ## Dashboards
 
