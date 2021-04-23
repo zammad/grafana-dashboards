@@ -86,7 +86,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1618394953792,
+  "iteration": 1619163165790,
   "links": [],
   "panels": [
     {
@@ -2321,9 +2321,10 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
-          "max": 7400,
-          "min": -7400,
+          "max": 380,
+          "min": -30,
           "noValue": "no data",
           "thresholds": {
             "mode": "absolute",
@@ -2334,23 +2335,19 @@
               },
               {
                 "color": "red",
-                "value": -7200
+                "value": -1
               },
               {
                 "color": "#EAB839",
-                "value": -3600
-              },
-              {
-                "color": "green",
                 "value": 0
               },
               {
-                "color": "#6ED0E0",
-                "value": 3600
+                "color": "green",
+                "value": 30
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "minutes"
         },
         "overrides": []
       },
@@ -2367,7 +2364,7 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^first_response_diff_s$/",
+          "fields": "/^first_response_diff$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -2377,7 +2374,7 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "alias": "first_response_diff_s",
+          "alias": "first_response_diff",
           "bucketAggs": [
             {
               "field": "created_at",
@@ -2393,12 +2390,9 @@
           "metrics": [
             {
               "field": "first_response_diff_in_min",
-              "hide": false,
               "id": "1",
-              "settings": {
-                "script": "_value * 60"
-              },
-              "type": "sum"
+              "settings": {},
+              "type": "avg"
             }
           ],
           "query": "",
@@ -2644,9 +2638,10 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
-          "max": 7400,
-          "min": -7300,
+          "max": 380,
+          "min": -30,
           "noValue": "no data",
           "thresholds": {
             "mode": "absolute",
@@ -2657,23 +2652,19 @@
               },
               {
                 "color": "red",
-                "value": -7200
+                "value": -1
               },
               {
                 "color": "#EAB839",
-                "value": -3600
-              },
-              {
-                "color": "green",
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 3600
+                "color": "green",
+                "value": 30
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "minutes"
         },
         "overrides": []
       },
@@ -2690,7 +2681,7 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^update_diff_s$/",
+          "fields": "/^update_diff$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -2700,10 +2691,10 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "alias": "update_diff_s",
+          "alias": "update_diff",
           "bucketAggs": [
             {
-              "field": "created_at",
+              "field": "updated_at",
               "id": "2",
               "settings": {
                 "interval": "auto",
@@ -2716,12 +2707,8 @@
           "metrics": [
             {
               "field": "update_diff_in_min",
-              "hide": false,
               "id": "1",
-              "settings": {
-                "script": "_value * 60"
-              },
-              "type": "sum"
+              "type": "avg"
             }
           ],
           "query": "",
@@ -2767,7 +2754,6 @@
       "interval": "${interval_graphs}",
       "options": {
         "displayLabels": [
-          "name",
           "percent"
         ],
         "legend": {
@@ -3164,9 +3150,10 @@
           "color": {
             "mode": "thresholds"
           },
+          "decimals": 0,
           "mappings": [],
-          "max": 7400,
-          "min": -7300,
+          "max": 380,
+          "min": -30,
           "noValue": "no data",
           "thresholds": {
             "mode": "absolute",
@@ -3177,23 +3164,19 @@
               },
               {
                 "color": "red",
-                "value": -7200
+                "value": -1
               },
               {
                 "color": "#EAB839",
-                "value": -3600
-              },
-              {
-                "color": "green",
                 "value": 0
               },
               {
-                "color": "blue",
-                "value": 3600
+                "color": "green",
+                "value": 30
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "m"
         },
         "overrides": []
       },
@@ -3210,7 +3193,7 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^update_diff_s$/",
+          "fields": "/^close_diff$/",
           "values": false
         },
         "showThresholdLabels": false,
@@ -3220,10 +3203,10 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "alias": "update_diff_s",
+          "alias": "close_diff",
           "bucketAggs": [
             {
-              "field": "created_at",
+              "field": "close_at",
               "id": "2",
               "settings": {
                 "interval": "auto",
@@ -3236,12 +3219,8 @@
           "metrics": [
             {
               "field": "close_diff_in_min",
-              "hide": false,
               "id": "1",
-              "settings": {
-                "script": "_value * 60"
-              },
-              "type": "sum"
+              "type": "avg"
             }
           ],
           "query": "",
@@ -3320,5 +3299,5 @@
   "timezone": "",
   "title": "Tickets",
   "uid": "RwZWyvlMz",
-  "version": 122
+  "version": 127
 }
