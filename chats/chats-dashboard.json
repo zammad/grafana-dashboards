@@ -9,6 +9,7 @@
       "pluginName": "Elasticsearch"
     }
   ],
+  "__elements": {},
   "__requires": [
     {
       "type": "datasource",
@@ -23,21 +24,21 @@
       "version": ""
     },
     {
+      "type": "panel",
+      "id": "geomap",
+      "name": "Geomap",
+      "version": ""
+    },
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.5.1"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-worldmap-panel",
-      "name": "Worldmap Panel",
-      "version": "0.3.2"
+      "version": "10.3.1"
     },
     {
       "type": "panel",
       "id": "piechart",
-      "name": "Pie chart v2",
+      "name": "Pie chart",
       "version": ""
     },
     {
@@ -57,7 +58,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -66,21 +70,28 @@
       }
     ]
   },
+  "description": "Sample Dashboard to visualize Zammad Chats.",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1618395099607,
   "links": [],
+  "liveNow": true,
   "panels": [
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -90,8 +101,10 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -99,7 +112,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "decimals": 0,
           "mappings": [],
@@ -116,7 +136,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -133,10 +154,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
-        "tooltipOptions": {
-          "mode": "single"
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
@@ -153,6 +176,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -169,18 +196,48 @@
       "type": "timeseries"
     },
     {
-      "circleMaxSize": "30",
-      "circleMinSize": 2,
-      "colors": [
-        "#73BF69",
-        "rgba(237, 129, 40, 0.89)",
-        "#F2495C"
-      ],
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
-      "decimals": 0,
-      "esMetric": "Count",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
+      "description": "Top 15",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "displayName": "#",
+          "mappings": [],
+          "max": 30,
+          "min": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#73BF69",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 15
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "Chat(s)",
+          "unitScale": false
+        },
         "overrides": []
       },
       "gridPos": {
@@ -189,39 +246,108 @@
         "x": 12,
         "y": 0
       },
-      "hideEmpty": true,
-      "hideZero": true,
       "id": 9,
-      "initialZoom": "1.7",
-      "locationData": "countries",
-      "mapCenter": "Europe",
-      "mapCenterLatitude": 46,
-      "mapCenterLongitude": 14,
       "maxDataPoints": 1,
-      "mouseWheelZoom": true,
-      "pluginVersion": "7.5.1",
-      "showLegend": true,
-      "stickyLabels": false,
-      "tableQueryOptions": {
-        "geohashField": "geohash",
-        "labelField": "country",
-        "latitudeField": "latitude",
-        "longitudeField": "longitude",
-        "metricField": "metric",
-        "queryType": "coordinates"
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Basemap",
+          "opacity": 1,
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": true,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "field": "Total",
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "field": "Total",
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "field": "Total",
+                  "fixed": 5,
+                  "max": 30,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "text": {
+                  "fixed": "",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 15,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "location": {
+              "gazetteer": "public/gazetteer/countries.json",
+              "lookup": "Country",
+              "mode": "lookup"
+            },
+            "name": "Origin Country Count",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "europe",
+          "lastOnly": false,
+          "lat": 46,
+          "layer": "Origin Country Count",
+          "lon": 14,
+          "shared": false,
+          "zoom": 1.7
+        }
       },
+      "pluginVersion": "10.3.1",
       "targets": [
         {
-          "alias": "",
+          "alias": "Country Name",
           "bucketAggs": [
             {
-              "field": "preferences.geo_ip.country_code.keyword",
+              "field": "preferences.geo_ip.country_name.keyword",
               "id": "2",
               "settings": {
                 "min_doc_count": "0",
                 "order": "desc",
                 "orderBy": "_term",
-                "size": "10"
+                "size": "15"
               },
               "type": "terms"
             },
@@ -234,6 +360,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -246,33 +376,58 @@
           "timeField": "created_at"
         }
       ],
-      "thresholds": "10,30",
       "title": "Chatting countries (origin)",
       "transformations": [
         {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": true,
+            "mode": "seriesToRows",
+            "reducers": [
+              "sum"
+            ]
+          }
+        },
+        {
           "id": "filterFieldsByName",
           "options": {
+            "byVariable": false,
             "include": {
-              "pattern": ""
+              "names": [
+                "Total",
+                "preferences.geo_ip.country_name.keyword"
+              ]
             }
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "preferences(.*)",
+            "renamePattern": "Country"
           }
         }
       ],
-      "type": "grafana-worldmap-panel",
-      "unitPlural": "",
-      "unitSingle": "",
-      "valueName": "total"
+      "type": "geomap"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -287,7 +442,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -309,8 +465,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "displayName",
@@ -328,9 +487,18 @@
       },
       "id": 6,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -347,6 +515,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -364,15 +536,22 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -387,7 +566,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -409,8 +589,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "displayName",
@@ -428,9 +611,18 @@
       },
       "id": 10,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -447,6 +639,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -464,7 +660,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "description": "This is the last page the chat was used on. If the user browses the website, the URL may change.",
       "fieldConfig": {
         "defaults": {
@@ -472,8 +671,12 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -488,7 +691,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -510,8 +714,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "displayName",
@@ -529,9 +736,18 @@
       },
       "id": 5,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -548,6 +764,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -565,7 +785,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -573,8 +796,12 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -589,7 +816,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -611,8 +839,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "displayName",
@@ -630,9 +861,18 @@
       },
       "id": 15,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -649,6 +889,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -666,7 +910,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -696,7 +943,8 @@
               }
             ]
           },
-          "unit": "Messages"
+          "unit": "Messages",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -707,8 +955,10 @@
         "y": 10
       },
       "id": 14,
-      "interval": null,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -718,9 +968,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -737,6 +988,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "field": "messages.id",
@@ -750,34 +1005,30 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Average number of messages",
       "transformations": [],
       "type": "gauge"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "unitScale": true
         },
         "overrides": []
       },
@@ -796,6 +1047,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -806,7 +1058,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -835,6 +1091,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -852,7 +1112,10 @@
       "type": "piechart"
     },
     {
-      "datasource": "${DS_ES_- CHAT SESSIONS}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CHAT SESSIONS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -883,7 +1146,8 @@
               }
             ]
           },
-          "unit": "dtdurationms"
+          "unit": "dtdurationms",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -894,8 +1158,10 @@
         "y": 16
       },
       "id": 12,
-      "interval": null,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -905,9 +1171,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -936,6 +1203,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -975,6 +1246,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CHAT SESSIONS}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -988,8 +1263,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Average chatting time",
       "transformations": [
         {
@@ -1031,9 +1304,8 @@
       "type": "gauge"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 27,
-  "style": "dark",
+  "refresh": "",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -1047,7 +1319,6 @@
           "value": "1d"
         },
         "description": "Allows you to set the minimum data point size. The bigger the less details you'll have.",
-        "error": null,
         "hide": 0,
         "label": "Graph Intervall",
         "name": "interval_graphs",
@@ -1092,7 +1363,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Chats",
+  "title": "Zammad: Chats",
   "uid": "fZ6YLr_Gk",
-  "version": 17
+  "version": 18,
+  "weekStart": ""
 }

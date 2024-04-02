@@ -9,6 +9,7 @@
       "pluginName": "Elasticsearch"
     }
   ],
+  "__elements": {},
   "__requires": [
     {
       "type": "datasource",
@@ -26,12 +27,12 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.5.1"
+      "version": "10.3.1"
     },
     {
       "type": "panel",
       "id": "piechart",
-      "name": "Pie chart v2",
+      "name": "Pie chart",
       "version": ""
     },
     {
@@ -51,7 +52,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -62,21 +66,28 @@
       }
     ]
   },
+  "description": "Sample Dashboard for phone calls via Zammads CTI.",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1618395116697,
   "links": [],
+  "liveNow": true,
   "panels": [
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -86,8 +97,10 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -95,7 +108,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "decimals": 0,
           "mappings": [],
@@ -112,7 +132,8 @@
               }
             ]
           },
-          "unit": "calls"
+          "unit": "calls",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -154,10 +175,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
-        "tooltipOptions": {
-          "mode": "multi"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
@@ -186,6 +209,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -221,6 +248,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -234,41 +265,33 @@
           "timeField": "start_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Number of calls by direction",
       "transformations": [],
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "fixedColor": "light-blue",
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "decimals": 0,
           "mappings": [],
           "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 1
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 10
-              }
-            ]
-          },
-          "unit": "calls"
+          "unit": "calls",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -309,6 +332,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "donut",
@@ -319,7 +343,11 @@
           "fields": "/.*/",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -346,6 +374,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -358,8 +390,6 @@
           "timeField": "start_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Call Ratio incoming / outgoing",
       "transformations": [
         {
@@ -376,7 +406,10 @@
       "type": "piechart"
     },
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -405,7 +438,8 @@
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "dtdurations",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -416,8 +450,9 @@
         "y": 0
       },
       "id": 5,
-      "interval": null,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -428,9 +463,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "duration_waiting_time_s",
@@ -446,6 +482,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -459,14 +499,15 @@
           "timeField": "start_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Average waiting time",
       "transformations": [],
       "type": "gauge"
     },
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -496,7 +537,8 @@
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "dtdurations",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -508,6 +550,8 @@
       },
       "id": 6,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -518,9 +562,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "duration_talking_time_s",
@@ -536,6 +581,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -549,22 +598,26 @@
           "timeField": "start_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Average talking time",
       "transformations": [],
       "type": "gauge"
     },
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -579,7 +632,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -601,8 +655,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -616,9 +673,18 @@
       },
       "id": 8,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -635,6 +701,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -652,15 +722,21 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- CTI LOG}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- CTI LOG}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -675,7 +751,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -697,8 +774,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -712,9 +792,18 @@
       },
       "id": 9,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -731,6 +820,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- CTI LOG}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -748,9 +841,8 @@
       "type": "table"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 27,
-  "style": "dark",
+  "refresh": "",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -764,7 +856,6 @@
           "value": "1d"
         },
         "description": "Allows you to set the minimum data point size. The bigger the less details you'll have.",
-        "error": null,
         "hide": 0,
         "label": "Graph Intervall",
         "name": "interval_graphs",
@@ -809,7 +900,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Caller Stats",
+  "title": "Zammad: Caller Stats",
   "uid": "nAj4-MlMk",
-  "version": 20
+  "version": 21,
+  "weekStart": ""
 }

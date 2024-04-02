@@ -25,6 +25,7 @@
       "pluginName": "Elasticsearch"
     }
   ],
+  "__elements": {},
   "__requires": [
     {
       "type": "datasource",
@@ -42,12 +43,12 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.5.1"
+      "version": "10.3.1"
     },
     {
       "type": "panel",
       "id": "piechart",
-      "name": "Pie chart v2",
+      "name": "Pie chart",
       "version": ""
     },
     {
@@ -73,7 +74,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -82,16 +86,20 @@
       }
     ]
   },
+  "description": "Sample dashboard for Zammad Tickets.",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1619163165790,
   "links": [],
+  "liveNow": true,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -100,12 +108,23 @@
       },
       "id": 31,
       "panels": [],
-      "repeat": null,
+      "targets": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "General metrics",
       "type": "row"
     },
     {
-      "datasource": "-- Mixed --",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
       "description": "1h time range minimum",
       "fieldConfig": {
         "defaults": {
@@ -113,6 +132,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -122,8 +144,10 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -131,7 +155,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "decimals": 0,
           "mappings": [],
@@ -148,7 +179,8 @@
               }
             ]
           },
-          "unit": "Tickets"
+          "unit": "Tickets",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -165,14 +197,15 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
-        "tooltipOptions": {
-          "mode": "multi"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
-      "repeat": null,
       "repeatDirection": "h",
       "targets": [
         {
@@ -187,7 +220,10 @@
               "type": "date_histogram"
             }
           ],
-          "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -212,7 +248,10 @@
               "type": "date_histogram"
             }
           ],
-          "datasource": "${DS_ES_- TICKETS BY CLOSED_AT}",
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CLOSED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -225,8 +264,6 @@
           "timeField": "close_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Ticket create / close rate",
       "transformations": [
         {
@@ -241,7 +278,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -261,7 +301,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -273,7 +314,6 @@
       },
       "id": 12,
       "interval": "1d",
-      "maxDataPoints": null,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -286,10 +326,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -304,6 +346,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "hide": false,
@@ -323,7 +369,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CLOSED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CLOSED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -343,7 +392,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -368,10 +418,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -386,6 +438,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CLOSED_AT}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -404,25 +460,27 @@
       "type": "stat"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "decimals": 0,
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "Tickets"
+          "unit": "Tickets",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -441,6 +499,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -451,7 +510,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -479,6 +542,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -496,28 +563,25 @@
       "type": "piechart"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "-- Mixed --",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
       "description": "Article-Sender-IDs are **NOT** the same on every instance. Run \"Ticket::Article::Sender.find(<value>).name\"  within your rails console to get the renames (see transforms) correctly.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "unitScale": true
         },
         "overrides": []
       },
@@ -528,7 +592,6 @@
         "y": 5
       },
       "id": 25,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -539,6 +602,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -549,7 +613,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -578,7 +646,10 @@
               "type": "date_histogram"
             }
           ],
-          "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -596,8 +667,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Sender ratio",
       "transformations": [
         {
@@ -625,8 +694,10 @@
       "type": "piechart"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "-- Mixed --",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
       "description": "1h time range minimum",
       "fieldConfig": {
         "defaults": {
@@ -635,6 +706,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -644,8 +718,10 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -656,7 +732,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "decimals": 0,
           "mappings": [],
@@ -671,7 +754,8 @@
               }
             ]
           },
-          "unit": "Articles"
+          "unit": "Articles",
+          "unitScale": true
         },
         "overrides": [
           {
@@ -710,14 +794,15 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
-        "tooltipOptions": {
-          "mode": "multi"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
-      "repeat": null,
       "targets": [
         {
           "alias": "Article creations",
@@ -731,7 +816,10 @@
               "type": "date_histogram"
             }
           ],
-          "datasource": "${DS_ES_- TICKET ARTICLES}",
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKET ARTICLES}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -746,35 +834,30 @@
           "timeField": "article.created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Created Articles",
       "transformations": [],
       "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "-- Mixed --",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
       "description": "Article-Type-IDs are **NOT** the same on every instance. Run \"Ticket::Article::Type.find(<value>)\"  within your rails console to get the renames (see transforms) correctly.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "unitScale": true
         },
         "overrides": []
       },
@@ -785,7 +868,6 @@
         "y": 13
       },
       "id": 19,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -796,6 +878,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -806,7 +889,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -835,7 +922,10 @@
               "type": "date_histogram"
             }
           ],
-          "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -853,8 +943,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Article type ratio",
       "transformations": [
         {
@@ -945,25 +1033,27 @@
       "type": "piechart"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "decimals": 0,
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "Tickets"
+          "unit": "Tickets",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -982,6 +1072,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -992,7 +1083,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -1020,6 +1115,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -1038,7 +1137,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1047,11 +1149,23 @@
       },
       "id": 29,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "More details",
       "type": "row"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1059,8 +1173,11 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "color-text",
-            "filterable": false
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1071,7 +1188,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1108,10 +1226,19 @@
       },
       "id": 6,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -1128,16 +1255,6 @@
               "type": "terms"
             },
             {
-              "field": "created_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "title.keyword",
               "id": "5",
               "settings": {
@@ -1149,6 +1266,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "id",
@@ -1179,16 +1300,6 @@
               "type": "terms"
             },
             {
-              "field": "created_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "number.keyword",
               "id": "5",
               "settings": {
@@ -1200,6 +1311,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -1217,8 +1332,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Newest 10 tickets",
       "transformations": [
         {
@@ -1259,7 +1372,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1267,8 +1383,11 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "color-text",
-            "filterable": false
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1279,7 +1398,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1316,10 +1436,19 @@
       },
       "id": 42,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -1336,16 +1465,6 @@
               "type": "terms"
             },
             {
-              "field": "updated_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "title.keyword",
               "id": "5",
               "settings": {
@@ -1357,6 +1476,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "id",
@@ -1387,16 +1510,6 @@
               "type": "terms"
             },
             {
-              "field": "updated_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "number.keyword",
               "id": "5",
               "settings": {
@@ -1408,6 +1521,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -1425,8 +1542,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Last 10 ticket updates",
       "transformations": [
         {
@@ -1466,7 +1581,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1474,8 +1592,11 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "color-text",
-            "filterable": false
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1486,7 +1607,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1523,6 +1645,15 @@
       },
       "id": 49,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": [
           {
@@ -1531,7 +1662,7 @@
           }
         ]
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -1548,16 +1679,6 @@
               "type": "terms"
             },
             {
-              "field": "close_at",
-              "id": "7",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "title.keyword",
               "id": "8",
               "settings": {
@@ -1569,6 +1690,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "id",
@@ -1599,16 +1724,6 @@
               "type": "terms"
             },
             {
-              "field": "close_at",
-              "id": "6",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "number.keyword",
               "id": "7",
               "settings": {
@@ -1620,6 +1735,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -1637,8 +1756,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Last 10 closed tickets",
       "transformations": [
         {
@@ -1679,15 +1796,22 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1706,7 +1830,8 @@
                 "value": 30
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1740,8 +1865,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -1756,9 +1884,18 @@
       "id": 41,
       "interval": "15m",
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -1775,6 +1912,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -1793,7 +1934,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "This shows the last owner only and may not display the real workload of each agent.",
       "fieldConfig": {
         "defaults": {
@@ -1801,16 +1945,18 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -1821,7 +1967,8 @@
                 "value": 30
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1850,12 +1997,12 @@
                 "id": "mappings",
                 "value": [
                   {
-                    "from": "",
-                    "id": 1,
-                    "text": "(not assigned)",
-                    "to": "",
-                    "type": 1,
-                    "value": "-"
+                    "options": {
+                      "-": {
+                        "text": "(not assigned)"
+                      }
+                    },
+                    "type": "value"
                   }
                 ]
               }
@@ -1868,8 +2015,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -1884,9 +2034,18 @@
       "id": 32,
       "interval": "15m",
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -1903,6 +2062,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -1921,30 +2084,36 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -1958,8 +2127,11 @@
                 "value": "Number of tickets"
               },
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           },
@@ -1984,12 +2156,20 @@
         "y": 35
       },
       "id": 53,
-      "maxDataPoints": null,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -2006,6 +2186,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2021,30 +2205,33 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top 10 organizations",
       "transformations": [],
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -2055,7 +2242,8 @@
                 "value": 30
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -2089,8 +2277,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -2105,9 +2296,18 @@
       "id": 27,
       "interval": "15m",
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -2124,6 +2324,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "hide": true,
@@ -2142,30 +2346,36 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CLOSED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CLOSED_AT}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
                 "value": 80
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -2175,8 +2385,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "basic"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "gauge"
+                }
               }
             ]
           }
@@ -2189,12 +2402,20 @@
         "y": 35
       },
       "id": 52,
-      "maxDataPoints": null,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -2222,6 +2443,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CLOSED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2235,8 +2460,6 @@
           "timeField": "close_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Average accounted time of tickets",
       "transformations": [
         {
@@ -2255,8 +2478,7 @@
           "options": {
             "fields": {
               "Sum": {
-                "aggregations": [],
-                "operation": null
+                "aggregations": []
               },
               "group.name.keyword": {
                 "aggregations": [],
@@ -2301,7 +2523,10 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2310,11 +2535,23 @@
       },
       "id": 36,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "f1e430b6-eda8-4e2a-8c0e-95fbaa811f85"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "SLAs",
       "type": "row"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "Negative values indicate violated SLAs",
       "fieldConfig": {
         "defaults": {
@@ -2330,8 +2567,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "red",
@@ -2347,7 +2583,8 @@
               }
             ]
           },
-          "unit": "minutes"
+          "unit": "minutes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -2359,6 +2596,8 @@
       },
       "id": 15,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -2369,9 +2608,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "first_response_diff",
@@ -2387,6 +2627,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "first_response_diff_in_min",
@@ -2406,7 +2650,10 @@
       "type": "gauge"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "Some graphs *may* display current information only and thus hide historical escalations.",
       "fieldConfig": {
         "defaults": {
@@ -2414,6 +2661,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2423,8 +2673,10 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2432,7 +2684,14 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "decimals": 0,
           "mappings": [],
@@ -2440,12 +2699,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(115, 191, 105, 0)",
-                "value": null
+                "color": "rgba(115, 191, 105, 0)"
               }
             ]
           },
-          "unit": "Tickets"
+          "unit": "Tickets",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -2461,14 +2720,15 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
-        "tooltipOptions": {
-          "mode": "multi"
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
-      "repeat": null,
       "targets": [
         {
           "alias": "First response violated",
@@ -2484,6 +2744,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -2509,6 +2773,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2535,6 +2803,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2561,6 +2833,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2587,6 +2863,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2613,6 +2893,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2631,7 +2915,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "Negative values indicate violated SLAs",
       "fieldConfig": {
         "defaults": {
@@ -2647,8 +2934,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "red",
@@ -2664,7 +2950,8 @@
               }
             ]
           },
-          "unit": "minutes"
+          "unit": "minutes",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -2676,6 +2963,8 @@
       },
       "id": 16,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -2686,9 +2975,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "update_diff",
@@ -2704,6 +2994,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "update_diff_in_min",
@@ -2722,25 +3016,27 @@
       "type": "gauge"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "Some indicators *may* display current information only and thus hide historical escalations.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
           "decimals": 0,
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(115, 191, 105, 0)",
-                "value": null
-              }
-            ]
-          },
-          "unit": "Tickets"
+          "unit": "Tickets",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -2759,6 +3055,7 @@
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
+          "showLegend": true,
           "values": []
         },
         "pieType": "pie",
@@ -2769,7 +3066,11 @@
           "fields": "",
           "values": false
         },
-        "text": {}
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "7.5.1",
       "targets": [
@@ -2787,6 +3088,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "id": "1",
@@ -2812,6 +3117,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2838,6 +3147,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": true,
           "metrics": [
             {
@@ -2864,6 +3177,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": true,
           "metrics": [
             {
@@ -2890,6 +3207,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2916,6 +3237,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -2934,7 +3259,10 @@
       "type": "piechart"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "This shows current escalated tickets, they will disappear upon solving.",
       "fieldConfig": {
         "defaults": {
@@ -2943,19 +3271,22 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "color-text",
-            "filterable": false
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
-          }
+          },
+          "unitScale": true
         },
         "overrides": [
           {
@@ -2992,10 +3323,19 @@
       },
       "id": 43,
       "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "",
@@ -3012,16 +3352,6 @@
               "type": "terms"
             },
             {
-              "field": "escalation_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "title.keyword",
               "id": "5",
               "settings": {
@@ -3033,6 +3363,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "id",
@@ -3063,16 +3397,6 @@
               "type": "terms"
             },
             {
-              "field": "escalation_at",
-              "id": "3",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": "0",
-                "trimEdges": "0"
-              },
-              "type": "date_histogram"
-            },
-            {
               "field": "number.keyword",
               "id": "5",
               "settings": {
@@ -3084,6 +3408,10 @@
               "type": "terms"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "hide": false,
           "metrics": [
             {
@@ -3101,8 +3429,6 @@
           "timeField": "created_at"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Last 10 escalated ticket",
       "transformations": [
         {
@@ -3143,7 +3469,10 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_ES_- TICKETS BY CREATED_AT}",
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+      },
       "description": "Negative values indicate violated SLAs",
       "fieldConfig": {
         "defaults": {
@@ -3159,8 +3488,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "red",
@@ -3176,7 +3504,8 @@
               }
             ]
           },
-          "unit": "m"
+          "unit": "m",
+          "unitScale": true
         },
         "overrides": []
       },
@@ -3188,6 +3517,8 @@
       },
       "id": 47,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -3198,9 +3529,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "10.3.1",
       "targets": [
         {
           "alias": "close_diff",
@@ -3216,6 +3548,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "${DS_ES_- TICKETS BY CREATED_AT}"
+          },
           "metrics": [
             {
               "field": "close_diff_in_min",
@@ -3234,9 +3570,8 @@
       "type": "gauge"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 27,
-  "style": "dark",
+  "refresh": "",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
@@ -3250,7 +3585,6 @@
           "value": "1d"
         },
         "description": "Allows you to set the minimum data point size. The bigger the less details you'll have.",
-        "error": null,
         "hide": 0,
         "label": "Graph Intervall",
         "name": "interval_graphs",
@@ -3297,7 +3631,8 @@
     "hidden": false
   },
   "timezone": "",
-  "title": "Tickets",
+  "title": "Zammad: Tickets",
   "uid": "RwZWyvlMz",
-  "version": 127
+  "version": 128,
+  "weekStart": ""
 }

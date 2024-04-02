@@ -19,13 +19,8 @@ for a better idea what the dashboard is about.
 
 ## Compatibility note
 
-Please note that these dashboards work natively with Grafana 7.5. 
+Please note that these dashboards work natively with Grafana 10.3. 
 Older versions may not support them or need manual adjustments.
-
-The chat session dashboard requires the 
-[worldmap plugin](https://grafana.com/grafana/plugins/grafana-worldmap-panel/). 
-Install it by using ``grafana-cli plugins install grafana-worldmap-panel`` 
-followed by a Grafana restart.
 
 ## Extending / Building your own panel
 
