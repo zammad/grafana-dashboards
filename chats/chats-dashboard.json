@@ -350,14 +350,6 @@
                 "size": "15"
               },
               "type": "terms"
-            },
-            {
-              "field": "created_at",
-              "id": "1",
-              "settings": {
-                "interval": "auto"
-              },
-              "type": "date_histogram"
             }
           ],
           "datasource": {
@@ -379,33 +371,26 @@
       "title": "Chatting countries (origin)",
       "transformations": [
         {
-          "id": "reduce",
-          "options": {
-            "includeTimeField": false,
-            "labelsToFields": true,
-            "mode": "seriesToRows",
-            "reducers": [
-              "sum"
-            ]
-          }
-        },
-        {
           "id": "filterFieldsByName",
           "options": {
             "byVariable": false,
             "include": {
-              "names": [
-                "Total",
-                "preferences.geo_ip.country_name.keyword"
-              ]
+              "names": []
             }
           }
         },
         {
           "id": "renameByRegex",
           "options": {
-            "regex": "preferences(.*)",
+            "regex": "(.*)country_name.keyword",
             "renamePattern": "Country"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "Count",
+            "renamePattern": "Total"
           }
         }
       ],
@@ -1365,6 +1350,6 @@
   "timezone": "",
   "title": "Zammad: Chats",
   "uid": "fZ6YLr_Gk",
-  "version": 18,
+  "version": 19,
   "weekStart": ""
 }
